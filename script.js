@@ -33,7 +33,7 @@ this.value = this.value.replace(/\D/g,'');
 
 allowOnlyNumbers(document.getElementById("cpf"));
 allowOnlyNumbers(document.getElementById("whatsapp"));
-allowOnlyNumbers(document.getElementById("flat"));
+
 
 // -------- WHATSAPP --------
 
@@ -57,6 +57,3 @@ const url = "https://wa.me/" + telefone + "?text=" + encodeURIComponent(mensagem
 window.open(url, "_blank");
 
 }
-
-
-
