@@ -34,14 +34,8 @@ this.value = this.value.replace(/\D/g,'');
 allowOnlyNumbers(document.getElementById("cpf"));
 allowOnlyNumbers(document.getElementById("whatsapp"));
 
-document.getElementById("checklistForm").addEventListener("submit",function(e){
 
-e.preventDefault();
-
-if(signaturePad.isEmpty()){
-alert("Por favor, assine o checklist.");
-return;
-}
+// -------- GERAR PDF --------
 
 function gerarPDF(){
 
@@ -77,18 +71,20 @@ html2pdf().set(opt).from(element).save();
 
 }
 
+
+// -------- WHATSAPP --------
+
 function abrirWhatsapp(){
 
-const telefone = document.getElementById("whatsapp").value;
+let telefone = document.getElementById("whatsapp").value;
 
 if(telefone.length < 10){
 alert("Digite um número de WhatsApp válido");
 return;
 }
 
-// adiciona código do Brasil se não tiver
 if (!telefone.startsWith("55")) {
-    telefone = "55" + telefone;
+telefone = "55" + telefone;
 }
 
 const mensagem = "Olá! Segue o checklist do seu flat.";
@@ -98,6 +94,3 @@ const url = "https://wa.me/" + telefone + "?text=" + encodeURIComponent(mensagem
 window.open(url, "_blank");
 
 }
-
-});
-
