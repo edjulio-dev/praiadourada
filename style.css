@@ -89,6 +89,7 @@ margin-top:10px;
 
 .signatureButtons button{
 background:#d3d3d3;
+color:black;
 border:none;
 padding:10px 15px;
 border-radius:6px;
@@ -116,6 +117,7 @@ cursor:pointer;
 .submitBtn:hover{
 background:#0f2748;
 }
+
 
 
 
