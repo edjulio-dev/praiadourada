@@ -4,15 +4,20 @@ const signaturePad = new SignaturePad(canvas, {
   backgroundColor: "rgba(255,255,255,1)"
 });
 
-function resizeCanvas() {
-  const ratio = Math.max(window.devicePixelRatio || 1, 1);
+function resizeCanvas(){
 
-  canvas.width = canvas.offsetWidth * ratio;
-  canvas.height = canvas.offsetHeight * ratio;
+const data = signaturePad.toData();
 
-  canvas.getContext("2d").scale(ratio, ratio);
+const ratio = Math.max(window.devicePixelRatio || 1,1);
 
-  signaturePad.clear();
+canvas.width = canvas.offsetWidth * ratio;
+canvas.height = canvas.offsetHeight * ratio;
+
+canvas.getContext("2d").scale(ratio,ratio);
+
+signaturePad.clear();
+signaturePad.fromData(data);
+
 }
 
 window.addEventListener("resize", resizeCanvas);
@@ -53,3 +58,4 @@ function abrirWhatsapp() {
 
   window.open(url, "_blank");
 }
+
