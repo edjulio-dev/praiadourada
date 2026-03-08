@@ -37,7 +37,7 @@ allowOnlyNumbers(document.getElementById("whatsapp"));
 
 // -------- GERAR PDF --------
 
-function gerarPDF(){
+async function gerarPDF(){
 
 if(signaturePad.isEmpty()){
 alert("Por favor, assine o checklist.");
@@ -46,28 +46,57 @@ return;
 
 const element = document.getElementById("checklistForm");
 
-const nome = document.querySelector("input[type='text']").value;
+const nome = document.querySelector("input[type='text']").value || "checklist";
 
 const opt = {
 
-margin:0.5,
+margin:10,
+
 filename:`checklist-flat-${nome}.pdf`,
 
 image:{ type:'jpeg', quality:0.98 },
 
 html2canvas:{
-scale:2
+scale:2,
+useCORS:true
 },
 
 jsPDF:{
-unit:'in',
+unit:'mm',
 format:'a4',
 orientation:'portrait'
+},
+
+pagebreak:{
+mode:['avoid-all','css','legacy']
 }
 
 };
 
-html2pdf().set(opt).from(element).save();
+const worker = html2pdf().set(opt).from(element);
+
+const pdfBlob = await worker.outputPdf('blob');
+
+const file = new File([pdfBlob], `checklist-flat-${nome}.pdf`, {type:'application/pdf'});
+
+if(navigator.share && navigator.canShare({files:[file]})){
+
+await navigator.share({
+title:"Checklist",
+text:"Checklist",
+files:[file]
+});
+
+}else{
+
+// fallback para desktop
+const url = URL.createObjectURL(pdfBlob);
+const link = document.createElement("a");
+link.href = url;
+link.download = `checklist-flat-${nome}.pdf`;
+link.click();
+
+}
 
 }
 
@@ -94,3 +123,4 @@ const url = "https://wa.me/" + telefone + "?text=" + encodeURIComponent(mensagem
 window.open(url, "_blank");
 
 }
+
