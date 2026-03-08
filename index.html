@@ -1,134 +1,149 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Checklist</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checklist do Flat</title>
 
-<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<style>
-body{
-font-family: Arial;
-padding:20px;
-max-width:500px;
-margin:auto;
-}
-
-input, textarea{
-width:100%;
-padding:8px;
-margin-top:5px;
-margin-bottom:15px;
-}
-
-canvas{
-border:1px solid #000;
-width:100%;
-height:200px;
-}
-
-button{
-padding:12px;
-font-size:16px;
-width:100%;
-background:#25D366;
-color:white;
-border:none;
-border-radius:5px;
-}
-</style>
+<link rel="stylesheet" href="style.css">
+<script src="script.js" defer></script>
 </head>
 
 <body>
 
-<h2>Checklist</h2>
+<div class="container">
+
+<header>
+<img src="logo.png" class="logo">
+<h1>Checklist de Itens do Flat</h1>
+</header>
+
+<form id="checklistForm">
+
+<div class="section">
+
+<h2>Informações do Hóspede</h2>
 
 <label>Nome</label>
-<input id="nome">
+<input type="text" required>
+
+<label>CPF</label>
+<input type="text" required>
 
 <label>WhatsApp</label>
-<input id="telefone" placeholder="5511999999999">
+<input type="tel" required>
 
-<label>Observações</label>
-<textarea id="obs"></textarea>
+<label>Número do Flat</label>
+<input type="number" required>
 
-<label>Checklist</label>
+</div>
 
-<input type="checkbox" id="item1"> Item 1 OK<br>
-<input type="checkbox" id="item2"> Item 2 OK<br>
-<input type="checkbox" id="item3"> Item 3 OK<br><br>
+<div class="section">
 
-<label>Assinatura</label>
+<h2>Banheiro</h2>
 
-<canvas id="signature"></canvas>
-<br>
-<button onclick="clearSignature()">Limpar assinatura</button>
-<br><br>
+<label class="check">
+<input type="checkbox">
+Toalha de rosto
+</label>
 
-<button onclick="enviar()">Enviar</button>
+<label class="check">
+<input type="checkbox">
+Toalha de piso
+</label>
 
-<script>
+<div class="row">
 
-const canvas = document.getElementById("signature");
-const signaturePad = new SignaturePad(canvas);
+<label class="check">
+<input type="checkbox">
+Toalha de banho
+</label>
 
-function clearSignature(){
-signaturePad.clear();
-}
+<select>
+<option>0</option>
+<option>1</option>
+<option>2</option>
+<option>3</option>
+<option>4</option>
+<option>5</option>
+<option>6</option>
+<option>7</option>
+<option>8</option>
+<option>9</option>
+<option>10</option>
+</select>
 
-async function enviar(){
+</div>
 
-const nome = document.getElementById("nome").value;
-const telefone = document.getElementById("telefone").value;
-const obs = document.getElementById("obs").value;
+</div>
 
-const item1 = document.getElementById("item1").checked ? "OK" : "NOK";
-const item2 = document.getElementById("item2").checked ? "OK" : "NOK";
-const item3 = document.getElementById("item3").checked ? "OK" : "NOK";
+<div class="section">
 
-const { jsPDF } = window.jspdf;
+<h2>Quarto</h2>
 
-const doc = new jsPDF();
+<label class="check">
+<input type="checkbox">
+Lençóis
+</label>
 
-doc.text("CHECKLIST",20,20);
+</div>
 
-doc.text("Nome: "+nome,20,40);
-doc.text("Telefone: "+telefone,20,50);
+<div class="section">
 
-doc.text("Item1: "+item1,20,70);
-doc.text("Item2: "+item2,20,80);
-doc.text("Item3: "+item3,20,90);
+<h2>Cozinha</h2>
 
-doc.text("Observações:",20,110);
-doc.text(obs,20,120);
+<label class="check">
+<input type="checkbox">
+Utensílios de cozinha
+</label>
 
-const assinatura = signaturePad.toDataURL();
+<label class="check">
+<input type="checkbox">
+Liquidificador
+</label>
 
-doc.addImage(assinatura,"PNG",20,140,100,40);
+<label class="check">
+<input type="checkbox">
+Torradeira
+</label>
 
-const pdfBlob = doc.output("blob");
+</div>
 
-const file = new File([pdfBlob], "checklist.pdf", {type:"application/pdf"});
+<div class="section">
 
-if (navigator.share) {
+<h2>Diversos</h2>
 
-await navigator.share({
-title: "Checklist",
-files: [file]
-});
+<label class="check">
+<input type="checkbox">
+Controle da televisão
+</label>
 
-} else {
+<label class="check">
+<input type="checkbox">
+Controle do ar-condicionado
+</label>
 
-doc.save("checklist.pdf");
+</div>
 
-alert("PDF gerado. Envie pelo WhatsApp.");
+<div class="section">
 
-}
+<h2>Assinatura</h2>
 
-}
+<canvas id="signaturePad"></canvas>
 
-</script>
+<div class="signatureButtons">
+<button type="button" onclick="clearSignature()">Limpar Assinatura</button>
+</div>
+
+</div>
+
+<button type="submit" class="submitBtn">
+Enviar Checklist
+</button>
+
+</form>
+
+</div>
 
 </body>
 </html>
