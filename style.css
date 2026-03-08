@@ -63,19 +63,24 @@ gap:10px;
 margin-top:10px;
 }
 
+.smallSelect{
+width:60px;
+padding:6px;
+}
+
 .row{
 display:flex;
-gap:10px;
 align-items:center;
-margin-top:10px;
+gap:10px;
+flex-wrap:nowrap;
 }
 
 #signaturePad{
+width:100%;
+height:160px;
 border:2px solid #173a6b;
 border-radius:6px;
-width:100%;
-height:150px;
-background:white;
+touch-action:none;
 }
 
 .signatureButtons{
@@ -106,4 +111,5 @@ transition:0.3s;
 
 .submitBtn:hover{
 background:#0f2748;
+
 }
