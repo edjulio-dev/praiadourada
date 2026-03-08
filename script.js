@@ -1,51 +1,47 @@
 const canvas = document.getElementById("signaturePad");
-const ctx = canvas.getContext("2d");
 
-let drawing = false;
-
-canvas.addEventListener("mousedown", () => {
-drawing = true;
+const signaturePad = new SignaturePad(canvas,{
+backgroundColor:"rgba(255,255,255,1)"
 });
 
-canvas.addEventListener("mouseup", () => {
-drawing = false;
-ctx.beginPath();
-});
+function resizeCanvas(){
 
-canvas.addEventListener("mousemove", draw);
+const ratio = Math.max(window.devicePixelRatio || 1,1);
 
-function draw(event){
+canvas.width = canvas.offsetWidth * ratio;
+canvas.height = canvas.offsetHeight * ratio;
 
-if(!drawing) return;
+canvas.getContext("2d").scale(ratio,ratio);
 
-ctx.lineWidth = 2;
-ctx.lineCap = "round";
-ctx.strokeStyle = "#000";
-
-const rect = canvas.getBoundingClientRect();
-
-ctx.lineTo(
-event.clientX - rect.left,
-event.clientY - rect.top
-);
-
-ctx.stroke();
-ctx.beginPath();
-
-ctx.moveTo(
-event.clientX - rect.left,
-event.clientY - rect.top
-);
-
+signaturePad.clear();
 }
+
+window.addEventListener("resize",resizeCanvas);
+resizeCanvas();
 
 function clearSignature(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
+signaturePad.clear();
 }
+
+function allowOnlyNumbers(input){
+
+input.addEventListener("input",function(){
+this.value = this.value.replace(/\D/g,'');
+});
+
+}
+
+allowOnlyNumbers(document.getElementById("cpf"));
+allowOnlyNumbers(document.getElementById("whatsapp"));
 
 document.getElementById("checklistForm").addEventListener("submit",function(e){
 
 e.preventDefault();
+
+if(signaturePad.isEmpty()){
+alert("Por favor, assine o checklist.");
+return;
+}
 
 alert("Checklist enviado com sucesso!");
 
