@@ -96,9 +96,30 @@ cursor:pointer;
 font-weight:bold;
 }
 
-.submitBtn{
-width:100%;
+.buttonGroup{
+display:flex;
+gap:10px;
 margin-top:20px;
+}
+
+.saveBtn{
+flex:1;
+padding:15px;
+background:#f2a65a;
+color:white;
+border:none;
+font-size:16px;
+border-radius:8px;
+cursor:pointer;
+font-weight:bold;
+}
+
+.saveBtn:hover{
+background:#e38f3c;
+}
+
+.submitBtn{
+flex:1;
 padding:15px;
 background:#173a6b;
 color:white;
@@ -106,10 +127,9 @@ border:none;
 font-size:16px;
 border-radius:8px;
 cursor:pointer;
-transition:0.3s;
 }
 
 .submitBtn:hover{
 background:#0f2748;
-
 }
+
